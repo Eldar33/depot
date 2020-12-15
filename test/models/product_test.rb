@@ -13,6 +13,8 @@ class ProductTest < ActiveSupport::TestCase
   #   assert true
   # end
 
+  fixtures :products
+
   test "product attributes must not be empty" do
     product = Product.new
     assert product.invalid?
@@ -50,5 +52,30 @@ class ProductTest < ActiveSupport::TestCase
     # не должно быть приемлемым
     end
   end
+
+  test "product is not valid without a unique title" do
+    # если у товара нет уникального названия, то он недопустим
+    # метод products вернет строку бд тестовых данных занесенных в файл products.yml
+    product = Product.new(title: products(:ruby).title,
+      description: "xxx",
+      price: 1,
+      image_url: "fred.jpg")
+    
+    assert product.invalid?
+
+    assert_equal ["has already been taken"], product.errors[:title] #уже было использовано
+
+  end
+
+  # test "product is not valid without a unique title - i18n" do
+  #   product = Product.new(title: products(:ruby).title), 
+  #     description: "xxx",
+  #     price: 1,
+  #     image_url: "fred.jpg")
+
+  #   assert product.invalid?
+
+  #   assert_equal [I18n.translate('activerecord.errors.messages.taken')], product.errors[:title]
+  # end
 
 end
