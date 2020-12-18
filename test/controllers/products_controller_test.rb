@@ -8,11 +8,29 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get products_url
     assert_response :success
+
+    assert_select ".list_description", 3
+    assert_select ".list_actions a", 9
+    assert_select "a", "New product"
+
   end
 
   test "should get new" do
     get new_product_url
     assert_response :success
+
+    assert_select "form .field", 4
+
+    assert_select "form" do |element|
+      assert element.attr("action").value == "/products"
+    end
+
+    assert_select "form .actions input" do |element|
+      assert element.attr("type").value == "submit"
+      assert element.attr("name").value == "commit"
+      assert element.attr("value").value == "Create Product"
+    end
+
   end
 
   test "should create product" do
