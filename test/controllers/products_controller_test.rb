@@ -57,8 +57,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy product" do
+    product = Product.create(title: "ForDestroy", description: "qqq", image_url: "ruby.jpg", price: 1)
     assert_difference('Product.count', -1) do
-      delete product_url(@product)
+      delete product_url(product)
     end
 
     assert_redirected_to products_url
