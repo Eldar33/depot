@@ -1,0 +1,16 @@
+
+<h2>Your Cart</h2>
+
+<table>
+
+	<!-- render получает объект line_items и перебирает его содержимое и ищет парциальный шаблон
+		для отображения содержимого корзины в app/views/line_items по имени с нижним подчерком впереди _line_item.html.erb--> 
+	<%= render(cart.line_items)%>
+	
+	<tr class="total_line">
+		<td colspan="2">Total</td>	
+		<td class="total_cell"><%= number_to_currency(cart.total_price) %></td>
+	</tr>
+</table>
+
+<%= button_to 'Empty cart', cart, method: :delete, data: {confirm: 'Are you sure?'} %>
