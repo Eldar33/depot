@@ -18,7 +18,7 @@
       <div id="side">
         <% if @cart %>
         <div id="cart">
-          <%= render @cart %>
+          <%= render_if(@cart && @cart.line_items.any?, @cart) %>
         </div>
         <% end %>
         <ul>
