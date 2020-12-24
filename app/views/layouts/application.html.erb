@@ -29,7 +29,7 @@
         </ul>
         <p><%= Time.now.strftime("%d.%m.%Y") %></p>
       </div>
-      <div id="main">
+      <div id="main" class="<%= controller.controller_name %>-for-channel">
         <%= yield %>
       </div>
     </div>

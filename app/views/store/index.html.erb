@@ -2,7 +2,7 @@
 <p id="notice"> <%= notice %> </p>
 <%end%>
 
-<h1>Your Pragmatic Catalog <%= @counter > 5 ? @counter : "" %></h1>
+<h1>Your Pragmatic Catalog <%= @counter && @counter > 5 ? @counter : "" %></h1>
 
 <% cache ['store', Product.latest] do%>
 <% @products.each do |product| %>
