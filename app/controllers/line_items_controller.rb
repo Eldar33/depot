@@ -38,6 +38,11 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       if @line_item.save
         format.html { redirect_to store_url }
+        # Благодаря этому изменению, когда create завершает 
+        # обработку AJAX-запроса, Rails будет искать для 
+        # отображения шаблон create template to render.
+        # в нашем случае create.js.erb 
+        format.js
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
