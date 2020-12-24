@@ -1,6 +1,11 @@
 
 <!-- Здесь используется одна интересная особенность. Внутри парциального шаблона мы ссылаемся на текущий объект, используя для этого имя переменной, совпадающее с именем шаблона. В данном случае парциал называется line_item, следовательно, внутри парциала ожидается наличие переменной по имени line_item. -->
+
+<% if @current_item == line_item %>
+<tr class ="line-item-highlight">
+<% else %>
 <tr>
+<% end %>
 	<td><%= line_item.quantity %>&times;</td>
 	<td><%= line_item.product.title %></td>
 	<td class="item_price"><%= number_to_currency(line_item.total_price) %></td>

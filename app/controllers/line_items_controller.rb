@@ -42,7 +42,7 @@ class LineItemsController < ApplicationController
         # обработку AJAX-запроса, Rails будет искать для 
         # отображения шаблон create template to render.
         # в нашем случае create.js.erb 
-        format.js
+        format.js {@current_item = @line_item}
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }
