@@ -22,7 +22,7 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     end
 
     # assert_redirected_to line_item_url(LineItem.last)
-    assert_redirected_to cart_path(assigns(:line_item).cart)
+    assert_redirected_to store_url#cart_path(assigns(:line_item).cart)
   end
 
   test "should show line_item" do
