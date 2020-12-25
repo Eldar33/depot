@@ -1,0 +1,4 @@
+
+
+cart = document.getElementById("cart")
+cart.innerHTML = "<%= j render_if(@line_item.cart && @line_item.cart.line_items.any?, @line_item.cart) %>"
