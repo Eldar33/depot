@@ -4,6 +4,13 @@ Rails.application.routes.draw do
   resources :carts
   get 'store/index'
   resources :products
+
+  root to: 'store#index', as: 'store'
+
+  resources :products do
+    get :who_bought, on: :member
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # The priority is based upon order of creation:
@@ -14,6 +21,4 @@ Rails.application.routes.draw do
   # (Раскладку всех маршрутов можно увидеть с помощью команды "rake routes".)
   # You can have the root of your site routed with "root"
   # (Корневой маршрут к вашему сайту можно получить с помощью "root")
-  root to: 'store#index', as: 'store'
-
 end
