@@ -59,14 +59,48 @@ class OrdersTest < ApplicationSystemTestCase
     fill_in 'order_address', with: '123 Main Street'
     fill_in 'order_email', with: 'dave@example.com'
 
-    # Проверяем предположение, что поля еще нет на странице
-    # любой элемент с id "#order_routing_number"
+    # *****************************
+    # ********* Check *************
+    # *****************************
+    # Проверяем предположение, что полей еще нет на странице
+    # любой элемент с id 
     assert_no_selector "#order_routing_number"
+    assert_no_selector "#order_account_number"
 
     # Выбираем значение 'Check' из поля 'Pay Type' 
     select 'Check', from: 'Pay Type'
 
-    # Проверяем, что поле появилось
+    # Проверяем, что поля появилось
     assert_selector "#order_routing_number"
+    assert_selector "#order_account_number"
+
+    # ***********************************
+    # ********* Credit card *************
+    # ***********************************
+    # Убираем выбор
+    select 'Select a payment method', from: 'Pay Type'
+
+    # Проверяем, что полей с id "order_credit_card_number" и "order_expiration_date" нет
+    assert_no_selector "#order_credit_card_number"    
+    assert_no_selector "#order_expiration_date" 
+
+    select 'Credit card', from: 'Pay Type'
+    # Проверяем, что поля появились
+    assert_selector "#order_credit_card_number"    
+    assert_selector "#order_expiration_date"
+
+    # ***********************************
+    # ********* Credit card *************
+    # ***********************************
+     # Убираем выбор
+    select 'Select a payment method', from: 'Pay Type'
+
+    assert_no_selector "#order_po_number"    
+
+    select 'Purchase order', from: 'Pay Type'
+
+    assert_selector "#order_po_number"    
+   
+
   end
 end
