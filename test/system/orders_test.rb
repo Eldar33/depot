@@ -46,4 +46,27 @@ class OrdersTest < ApplicationSystemTestCase
 
     assert_text "Order was successfully destroyed"
   end
+
+  test "check routing number" do
+    visit store_index_url
+
+     # кликаем по первой кнопке 'Add to Cart'
+    click_on 'Add to Cart', match: :first
+
+    click_on 'Checkout'
+
+    fill_in 'order_name', with: 'Dave Thomas'
+    fill_in 'order_address', with: '123 Main Street'
+    fill_in 'order_email', with: 'dave@example.com'
+
+    # Проверяем предположение, что поля еще нет на странице
+    # любой элемент с id "#order_routing_number"
+    assert_no_selector "#order_routing_number"
+
+    # Выбираем значение 'Check' из поля 'Pay Type' 
+    select 'Check', from: 'Pay Type'
+
+    # Проверяем, что поле появилось
+    assert_selector "#order_routing_number"
+  end
 end

@@ -7,7 +7,7 @@ class ProductsTest < ApplicationSystemTestCase
 
   test "visiting the index" do
     visit products_url
-    assert_selector "h1", text: "Products"
+    assert_selector "h1", text: "Listing products"
   end
 
   test "creating a Product" do
