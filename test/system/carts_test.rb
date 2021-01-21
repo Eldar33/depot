@@ -38,4 +38,23 @@ class CartsTest < ApplicationSystemTestCase
 
     assert_text "Cart was successfully destroyed"
   end
+
+  # homework
+  # Проверяем кнопку 'Add To Cart' 
+  test "adding to cart and empty cart" do
+    visit store_url
+    
+    assert_no_text "Your Cart"
+    click_on "Add to Cart", match: :first   
+    assert_text "Your Cart"
+    assert_selector ".line-item-highlight"
+
+    page.accept_confirm do
+      click_on 'Empty cart', match: :one
+    end
+    assert_no_text "Your Cart"
+
+
+         
+  end
 end
