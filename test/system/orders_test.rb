@@ -1,6 +1,9 @@
 require "application_system_test_case"
 
 class OrdersTest < ApplicationSystemTestCase
+  
+  include ActiveJob::TestHelper
+
   setup do
     @order = orders(:one)
   end
@@ -48,6 +51,10 @@ class OrdersTest < ApplicationSystemTestCase
   end
 
   test "check routing number" do
+
+    LineItem.delete_all
+    Order.delete_all
+
     visit store_index_url
 
      # кликаем по первой кнопке 'Add to Cart'
@@ -68,38 +75,65 @@ class OrdersTest < ApplicationSystemTestCase
     assert_no_selector "#order_account_number"
 
     # Выбираем значение 'Check' из поля 'Pay Type' 
-    select 'Check', from: 'Pay Type'
+    select 'Check', from: 'Pay type'
 
     # Проверяем, что поля появилось
     assert_selector "#order_routing_number"
     assert_selector "#order_account_number"
 
+    fill_in "Routing #", with: "123456"
+    fill_in "Account #", with: "987564"
+
+    # Метод perform_enqueued_jobs выполнит все задания в очереди,
+    # которые будут помещены в нее в переданном блоке
+    perform_enqueued_jobs do
+        click_button "Place Order"
+    end
+
+    orders = Order.all
+    assert_equal 1, orders.size
+
+    order = orders.first
+
+    assert_equal "Dave Thomas", order.name
+    assert_equal "123 Main Street", order.address
+    assert_equal "dave@example.com", order.email
+    assert_equal "Check", order.pay_type
+    assert_equal 1, order.line_items.size
+
+    # В тестовом окружении ActionMailer на самом деле не отправляет
+    # почту, а помещает ее в массив ActionMailer::Base.deliveries
+    mail = ActionMailer::Base.deliveries.last
+    assert_equal ["dave@example.com"], mail.to
+    assert_equal 'Sam Ruby <depot@example.com>', mail[:from].value
+    assert_equal "Pragmatic Store Order Confirmation", mail.subject
+
     # ***********************************
     # ********* Credit card *************
     # ***********************************
     # Убираем выбор
-    select 'Select a payment method', from: 'Pay Type'
+    # select 'Select a payment method', from: 'Pay Type'
 
     # Проверяем, что полей с id "order_credit_card_number" и "order_expiration_date" нет
-    assert_no_selector "#order_credit_card_number"    
-    assert_no_selector "#order_expiration_date" 
+    # assert_no_selector "#order_credit_card_number"    
+    # assert_no_selector "#order_expiration_date" 
 
-    select 'Credit card', from: 'Pay Type'
+    # select 'Credit card', from: 'Pay Type'
     # Проверяем, что поля появились
-    assert_selector "#order_credit_card_number"    
-    assert_selector "#order_expiration_date"
+    # assert_selector "#order_credit_card_number"    
+    # assert_selector "#order_expiration_date"
 
     # ***********************************
     # ********* Credit card *************
     # ***********************************
      # Убираем выбор
-    select 'Select a payment method', from: 'Pay Type'
+    # select 'Select a payment method', from: 'Pay Type'
 
-    assert_no_selector "#order_po_number"    
+    # assert_no_selector "#order_po_number"    
 
-    select 'Purchase order', from: 'Pay Type'
+    # select 'Purchase order', from: 'Pay Type'
 
-    assert_selector "#order_po_number"    
+    # assert_selector "#order_po_number"    
    
 
   end
