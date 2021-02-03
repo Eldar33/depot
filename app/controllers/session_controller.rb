@@ -1,4 +1,6 @@
 class SessionController < ApplicationController
+  # пропускаем проверку авторизации в этом контроллере
+  skip_before_action :authorize
 
   def new
   end

@@ -1,4 +1,6 @@
 class StoreController < ApplicationController
+  # пропускаем проверку авторизации в этом контроллере
+  skip_before_action :authorize
 
   include CounterIndexStore
   include CurrentCart
