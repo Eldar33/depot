@@ -1,0 +1,19 @@
+ru:
+  layouts:
+    application:
+      title: "Прагматичный книжный магазин"
+      home: "Главная"
+      questions: "Вопросы"
+      news: "Новости"
+      contact: "Контакты"
+
+  store:
+    index:
+      title_html:  "Твой прагматиный каталог"
+      add_html:    "В корзину"
+
+  carts:
+    cart:
+      title: "Ваша корзина"
+      empty: "Очистить корзину"
+      checkout: "Оформить заказ"
