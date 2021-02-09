@@ -17,3 +17,12 @@ ru:
       title: "Ваша корзина"
       empty: "Очистить корзину"
       checkout: "Оформить заказ"
+
+  number:
+    currency:
+      format:
+        unit: " дол."
+        precision: 2
+        separator: "."
+        delimeter: ","
+        format: "%n%u"

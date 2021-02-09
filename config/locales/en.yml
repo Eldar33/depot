@@ -49,3 +49,12 @@ en:
       empty: "Empty cart"
       checkout: "Checkout"
 
+  number:
+    currency:
+      format:
+        unit: "$"
+        precision: 2
+        separator: "."
+        delimeter: ","
+        format: "%u%n"
+
