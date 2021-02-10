@@ -26,3 +26,50 @@ ru:
         separator: "."
         delimeter: ","
         format: "%n%u"
+
+  orders:
+    new:
+      legend: "Пожалуйста введите детали платежа"
+    form:
+      name: "Имя"
+      address: "Адрес"
+      email: "E-mail"
+      pay_type: "Тип оплаты"
+      pay_prompt_html: "Выберите тип оплаты"
+      submit: "Заказать"
+      pay_types:
+        check: "Чек"
+        credit_card: "Кредитная карта"
+        purchase_order: "Purchase Order"
+      check_pay_type:
+        routing_number: "Routing #"
+        account_number: "Счет #"
+      credit_card_pay_type:
+        cc_number: "Номер карты #"
+        expiration_date: "Дата окончания"
+      purchase_order_pay_type:
+        po_number: "PO #"
+
+  activerecord:
+    errors:
+      messages:
+        inclusion: "имеет непредусмотренное значение"
+        blank: "не может быть пустым"
+
+    models:
+      order: "заказ"
+    attributes:
+      order:
+        address: "адрес"
+        name: "имя"
+        email: "E-mail"
+        pay_type: "Тип оплаты"
+
+  errors:
+    template:
+      body: "Проблемы возникли со следующими полями:"
+      header:
+        one: "1 ошибка %{model}"
+        other: "%{count} ошибок %{model}"
+
+  thanks: "Спасибо за заказ."
