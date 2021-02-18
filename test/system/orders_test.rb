@@ -20,13 +20,13 @@ class OrdersTest < ApplicationSystemTestCase
     click_on "Checkout"
 
     fill_in "Address", with: @order.address
-    fill_in "Email", with: @order.email
+    fill_in "E-mail", with: @order.email
     fill_in "Name", with: @order.name
 
-    select @order.pay_type, from: "Pay type" 
+    select @order.pay_type, from: "Pay with" 
 
     click_on "Place Order"
-    assert_text "Thank you for your order."
+    assert_text "Thank you for your order"
     
 
     # visit orders_url
@@ -90,7 +90,7 @@ class OrdersTest < ApplicationSystemTestCase
     assert_no_selector "#order_account_number"
 
     # Выбираем значение 'Check' из поля 'Pay Type' 
-    select 'Check', from: 'Pay type'
+    select 'Check', from: 'Pay with'
 
     # Проверяем, что поля появилось
     assert_selector "#order_routing_number"
