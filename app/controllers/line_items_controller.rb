@@ -27,7 +27,13 @@ class LineItemsController < ApplicationController
     @line_item = @cart.add_product(product)
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart}
+        format.html { redirect_to store_index_url}
+        # если запрос предназначается для JavaScript, то не дадим
+        # действию create перенаправить на отображение главной страницу
+        # когда create завершит обработку AJAX-запроса, Rails будет искать
+        # для отображения шаблон с именем ИМЯ_ДЕЙСТВИЯ.js.erb (create.js.erb
+        # в каталоге app/views/line_items)
+        format.js {@current_item = @line_item}
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new, status: :unprocessable_entity }

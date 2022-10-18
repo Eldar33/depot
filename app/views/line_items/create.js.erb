@@ -1,0 +1,14 @@
+//Этот код будет выполнен на стороне браузера,
+//за исключение секций Ruby,
+//секции Ruby будут выполнены на сервере
+//Находим в HTML документе элемент с id = cart
+//и заменяем его содержимое
+//"j" - это алиас метода escape_javascript,
+//Этот метод конвертирует строку Ruby в формат,
+//воспринимаемый как ввод для JavaScript
+
+cart = document.getElementById("cart")
+cart.innerHTML = "<%= j render(@cart) %>"
+
+notice = document.getElementById("notice")
+if (notice) notice.style.display = "none"
