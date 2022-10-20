@@ -10,11 +10,15 @@ consumer.subscriptions.create("ProductsChannel", {
   },
 
   received(data) {
+
     // Called when there's incoming data on the websocket for this channel
     // Ищем элемент main с классом store
     const storeElement = document.querySelector("main.store")
     if (storeElement) {
-      storeElement.innerHTML = data.html
+
+      storeElement.innerHTML = data.html.replace("id=\"product" + data.product_id +"\"", "class=\"line-item-highlight\"");
+
+
     }
   }
 });

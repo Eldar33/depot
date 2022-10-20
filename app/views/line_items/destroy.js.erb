@@ -1,0 +1,7 @@
+
+cart = document.getElementById("cart");
+<% if @line_item.cart.line_items.any? %>
+cart.innerHTML = "<%= j render @line_item.cart %>";
+<% else %>
+cart.innerHTML = "";
+<% end %>

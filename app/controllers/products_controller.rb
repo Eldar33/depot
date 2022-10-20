@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
         # передаем хеш с ключом html (для Javascript это будет объект JSON)
         # render_to_string отрисует HTML кусок с продуктами и преобразует его в строку
         # layout: false означает, что нам нужет только этот вид(store/index), а не вся страница
-        ActionCable.server.broadcast 'products', html: render_to_string('store/index', layout: false)
+        ActionCable.server.broadcast 'products', html: render_to_string('store/index', layout: false), product_id: @product.id
 
       else
         format.html { render :edit, status: :unprocessable_entity }

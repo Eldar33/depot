@@ -27,13 +27,13 @@ class LineItemsController < ApplicationController
     @line_item = @cart.add_product(product)
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to store_index_url}
+        format.html { redirect_to store_index_url }
         # если запрос предназначается для JavaScript, то не дадим
         # действию create перенаправить на отображение главной страницу
         # когда create завершит обработку AJAX-запроса, Rails будет искать
         # для отображения шаблон с именем ИМЯ_ДЕЙСТВИЯ.js.erb (create.js.erb
         # в каталоге app/views/line_items)
-        format.js {@current_item = @line_item}
+        format.js { @current_item = @line_item }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,13 +45,20 @@ class LineItemsController < ApplicationController
   # PATCH/PUT /line_items/1 or /line_items/1.json
   def update
     respond_to do |format|
+
+      if params[:decrement]
+        @line_item.quantity -= 1
+      end
+
       if @line_item.update(line_item_params)
         format.html { redirect_to line_item_url(@line_item), notice: "Line item was successfully updated." }
+        format.js
         format.json { render :show, status: :ok, location: @line_item }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @line_item.errors, status: :unprocessable_entity }
       end
+
     end
   end
 
@@ -61,18 +68,20 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to line_items_url, notice: "Line item was successfully destroyed." }
+      format.js
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_line_item
-      @line_item = LineItem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def line_item_params
-      params.require(:line_item).permit(:product_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_line_item
+    @line_item = LineItem.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def line_item_params
+    params.require(:line_item).permit(:product_id)
+  end
 end
