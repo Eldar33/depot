@@ -3,8 +3,9 @@ class LineItem < ApplicationRecord
   # другими словами, если таблица содержит внешние ключи, тогда
   # используем belongs_to
   # также будут доступны методы carts() и products() для объектов LineItem
+  belongs_to :order, optional: true
   belongs_to :product
-  belongs_to :cart
+  belongs_to :cart, optional: true
 
   def total_price
     product.price * quantity
