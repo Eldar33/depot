@@ -15,3 +15,13 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    orderElement = document.querySelector('main.orders');
+    btn = document.querySelector('input.checkout');
+    if (btn) {
+        btn.setAttribute('disabled', orderElement? true : false);
+    }
+});
