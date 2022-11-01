@@ -36,8 +36,13 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1 or /users/1.json
   def update
+
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.password_digest != BCrypt::Password.create(user_params[:old_password].to_i)
+        @user.errors.add("WrongOldPassword", "Wrong old password")
+        format.html { redirect_to "#{user_url}/edit", notice: "Wrong old password" }
+        format.json
+      elsif @user.update(user_params)
         format.html { redirect_to users_url, notice: "User #{@user.name} was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -69,6 +74,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :password, :password_confirmation)
+      params.require(:user).permit(:name, :password, :password_confirmation, :old_password)
     end
 end
