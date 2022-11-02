@@ -38,11 +38,15 @@ class UsersController < ApplicationController
   def update
 
     respond_to do |format|
-      if @user.password_digest != BCrypt::Password.create(user_params[:old_password].to_i)
+      # if @user.password_digest != BCrypt::Password.create(user_params[:old_password].to_i)
+      if !@user.authenticate(user_params[:old_password])
+        puts "**************************************************************"
+        puts "no validates"
+        puts "**************************************************************"
         @user.errors.add("WrongOldPassword", "Wrong old password")
         format.html { redirect_to "#{user_url}/edit", notice: "Wrong old password" }
         format.json
-      elsif @user.update(user_params)
+      elsif @user.update(user_params.except(:old_password))
         format.html { redirect_to users_url, notice: "User #{@user.name} was successfully updated." }
         format.json { render :show, status: :ok, location: @user }
       else
