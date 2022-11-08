@@ -58,3 +58,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # gem 'i18n-js', "= 3.0.0.rc11"
 
 gem 'i18n-js', '~> 3.0.0.rc11'
+
+gem 'slim-rails'
