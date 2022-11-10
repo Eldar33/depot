@@ -1,0 +1,24 @@
+article
+  -if notice
+    aside#notice = notice
+  h2 = t('.title')
+  table
+
+    / В функцию render можно передавать коллекцию элементов, и она отрисует парциал
+    / app/views/line_items/_line_item.html.erb для каждого элемента коллекции
+    / Rails найдет нужный парциал по имени таблицы переданной методу render переменной (line_item)
+    / Файл парциала должен быть такого формата _имя_переменной.html.erb
+
+    = render(cart.line_items)
+    tfoot
+    tr
+      th colspan="2"
+
+      td.price = number_to_currency(cart.total_price)
+  .actions
+    = button_to t('.empty'), cart,
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' }
+    = button_to t('.checkout'), new_order_path,
+                  method: :get,
+                  class: "checkout"
