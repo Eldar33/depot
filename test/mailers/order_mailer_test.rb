@@ -14,7 +14,7 @@ class OrderMailerTest < ActionMailer::TestCase
     assert_equal "Pragmatic Store Order Shipped", mail.subject
     assert_equal ["dave@example.org"], mail.to
     assert_equal ["depot@example.com"], mail.from
-    assert_match /<td[^>]*>1<\/td>.*\n<td>Programming Ruby 1.9<\/td>/, mail.body.encoded
+    assert_match /<td[^>]*>\n\s*1\n\s*<\/td>\n\s*<td>\n\s*Programming Ruby 1.9\n\s*<\/td>/, mail.body.encoded.gsub("\r", '')
   end
 
 end

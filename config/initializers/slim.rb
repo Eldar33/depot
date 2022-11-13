@@ -1,1 +1,1 @@
-Slim::Engine.default_options[:pretty] = true
+Slim::Engine.set_options pretty: true
