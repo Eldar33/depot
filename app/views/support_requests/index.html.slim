@@ -1,0 +1,47 @@
+ul
+  - @support_requests.each do |sr|
+    li
+      h1
+        | On #{sr.created_at.to_formatted_s(:long)}
+        code = " #{sr.email} writes:"
+      p
+      blockquote
+        h2= sr.subject
+        = sr.body
+      - if sr.order
+        h3 Recent Order
+        dl
+          dt Name
+          dd= sr.order.name
+
+          dt Email
+          dd= sr.order.email
+
+          dt Address
+          dd= sr.order.address
+          dt PayType
+          dd= sr.order.pay_type
+
+          dt Line Items
+          dd
+            ul
+              - sr.order.line_items.each do |line_item|
+                li
+                  = line_item.product.title
+                  = "(#{line_item.product.price})"
+      - else
+        h3.notice No associated order
+
+      - if sr.response.blank?
+        = form_with(model: sr, local: true, class: "depot_form") do |form|
+          .field
+            = form.label :response, "Write Response"
+            = form.rich_text_area :response, id: :support_request_response
+          .actions
+            = form.submit "Send Response"
+      - else
+        h4 Our response
+        p
+          blockquote
+            = sr.response
+      hr
