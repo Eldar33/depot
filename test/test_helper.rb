@@ -18,7 +18,9 @@ module AuthenticationHelpers
       visit login_url
       fill_in :name, with: user.name
       fill_in :password, with: 'secret'
-      click_on 'Login'
+      within('.depot_form') do
+        click_on 'Login'
+      end
     else
       post login_url, params: { name: user.name, password: 'secret' }
     end

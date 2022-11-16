@@ -65,7 +65,7 @@ class OrdersTest < ApplicationSystemTestCase
     # проверяем, что элемента с id = "order_routing_number" нет на форме
     assert_no_selector "#order_routing_number"
 
-    select 'Check', from: 'Pay type'
+    select 'Check', from: 'Pay with'
 
     # проверяем, что элемент с id = "order_routing_number" появился на форме
     assert_selector "#order_routing_number"

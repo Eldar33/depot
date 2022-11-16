@@ -27,6 +27,7 @@ class UsersTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Name", with: @user.name
+    fill_in "Old password", with: 'secret'
     fill_in "Password", with: 'secret'
     fill_in "Confirm", with: 'secret'
     click_on "Update User"

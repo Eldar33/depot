@@ -40,9 +40,6 @@ class UsersController < ApplicationController
     respond_to do |format|
       # if @user.password_digest != BCrypt::Password.create(user_params[:old_password].to_i)
       if !@user.authenticate(user_params[:old_password])
-        puts "**************************************************************"
-        puts "no validates"
-        puts "**************************************************************"
         @user.errors.add("WrongOldPassword", "Wrong old password")
         format.html { redirect_to "#{user_url}/edit", notice: "Wrong old password" }
         format.json
